@@ -1,0 +1,40 @@
+﻿@model OnlineShoppingWeb.Models.IndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Products.First().Id);
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products.First().Name);
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Products) {
+        <tr>
+            <td>@Html.DisplayFor(productitem => item.Id)</td>
+            <td>@Html.DisplayFor(productitem => item.Name)</td>
+            <td>
+                <a asp-action="Details" asp-controller="Product" asp-route-id = "@item.Id">Details</a>
+            </td>
+                <td>
+                    <a asp-action="Edit" asp-controller="Product" asp-route-id="@item.Id" asp-route-name = "@item.Name">Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-controller="Product" asp-route-id="@item.Id">Delete</a>
+                </td>
+        </tr>
+}
+    </tbody>
+</table>

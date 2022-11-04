@@ -1,0 +1,66 @@
+﻿@model OnlineShoppingWeb.Models.IndexViewModel
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<img src="~/image/Appliances for less.png" alt="Appliance for less" width="1000px" height="200px" />
+<script type="text/javascript">
+    function AddToCart(item){
+        var Id = $(item).attr("itemid");
+        var formData = new FormData();
+        formData.append("Id", itemid);
+        $.ajax({
+            async: true,
+            type:'POST',
+            contentType: false,
+            processData: false,
+            data: formData,
+            url： '/Home/Index',
+            success: function(data){
+                if(data.Success){
+                    $("#cartItem").text("Cart(" + data.Counter + ")");
+                }
+            },
+            error: function(){
+                alert("There is some problem")
+            }
+        });
+    }
+    </script>
+<div class="container">
+    <h1 class="display-4">Welcome</h1>
+    <p>Product Online Shopping System</p>
+    @foreach (var item in Model.Products)
+    {
+        <div class=" col-md-4" style="border: 2px solid black">
+        <div class="col-md-12" style="border: 2px solid maroon">
+            <h3>@item.Name</h3>
+        </div>
+        <div>
+            <div class="col-md-8">
+
+                <img src="~/image/@item.ImageName" width="150px" height="150px" />
+            </div>
+            <div class="col-md-12" style="text-align: left">
+                <b>@item.Description</b>
+            </div>
+        </div>
+        <div class="col=md=8" style="font-size: 18px; border-top: 2px solid maroon; padding: 2px">
+            <b>@item.Price</b>
+        </div>
+        @*<div class="col-md-4" style="text-align: right; margin-bottom: 10px; border-top: 2px solid maroon; padding: 2px">
+            <b>@item.Model</b>
+        </div>*@
+        <div class="col-md-4" style="text-align: right; margin-bottom: 10px; border-top: 2px solid maroon; padding: 2px">
+            <input type="button" name="ProductDetail" value="Product Detail" class="btn btn-primary" itemid="@item.Id" id="btnProductDetail" onclick="ProductDetail(this)"/>
+            <input type="button" name="AddToCart" value="Add to Cart" class="btn btn-primary" itemid="@item.Id" id="btnAddToCart" onclick="AddToCart(this)"/>
+        </div>
+       
+        </div>
+
+    }
+    @await Html.PartialAsync("_AboutUs")
+</div>
